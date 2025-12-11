@@ -114,6 +114,42 @@ Actual swap executes
 Tokens distributed: User gets 99.7%, Executor gets 0.3%
 ```
 
+## Status: Proof of Concept
+
+### What Works ✅
+- Hook intercepts and pauses large swaps (>1% of liquidity)
+- Randomized execution delay (24-84 seconds)
+- Permissionless executor network with fee incentives
+- Proper token accounting and settlement
+- Slippage protection and cancellation mechanism
+- **Comprehensive test coverage proving core mechanism**
+
+### Known Limitation 🔧
+The hook prevents mempool-based sandwich attacks but remains vulnerable 
+to execution-time sandwiching. An attacker could front-run the 
+`executeSwap()` call itself.
+
+**This is a known limitation in asynchronous execution systems and cannot 
+be solved at the smart contract level alone.**
+
+### Next Steps (Post-Hackathon)
+
+**Week 1-2: Fhenix FHE Integration**
+- Encrypt swap parameters (amount, direction, timing)
+- Implement homomorphic computation for validation
+- Atomic decrypt-and-execute to eliminate execution-time vulnerability
+
+**Week 3-4: Production Hardening**
+- Gas optimizations
+- Additional edge case testing
+- Audit preparation
+
+**Why FHE?**
+Fully Homomorphic Encryption makes the swap details invisible until 
+atomic execution. Attackers cannot sandwich what they cannot see. 
+This is the only cryptographically sound solution to the execution-time 
+vulnerability.
+
 ## Future Work
 
 Things I'd add with more time:
@@ -123,12 +159,6 @@ Things I'd add with more time:
 3. **Dynamic fee adjustment** - Scale executor fee with gas prices
 4. **Better randomness** - Use Chainlink VRF or similar for more robust unpredictability
 5. **Analytics dashboard** - Track MEV saved, execution times, etc.
-
-## Why This Matters
-
-Sandwich attacks extract real value from regular users and make DeFi feel predatory. This hook shows you can protect against them at the protocol level without sacrificing decentralization or adding trust assumptions.
-
-The beauty of Uniswap V4 hooks is they let you experiment with mechanism design like this - adding MEV protection as an opt-in feature rather than requiring L1 protocol changes.
 
 ---
 
