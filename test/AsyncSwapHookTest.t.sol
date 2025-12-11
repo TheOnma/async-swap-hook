@@ -77,9 +77,6 @@ contract AsyncSwapHookTest is Test, Deployers {
         return swapId;
     }
 
-    // ============================================
-    // TEST 1: Small swaps should pass through
-    // ============================================
     function test_SmallSwap_PassesThrough() public {
         // Small swap (0.5 ether < 1% of 100 ether liquidity)
         uint256 swapAmount = 0.5 ether;
@@ -111,9 +108,6 @@ contract AsyncSwapHookTest is Test, Deployers {
         assertEq(hook.pendingSwapCount(), 0, "Unexpected pending swap");
     }
 
-    // ============================================
-    // TEST 2: Large swaps should get paused
-    // ============================================
     function test_LargeSwap_GetsPaused() public {
         // Large swap (2 ether > 1% of 100 ether liquidity)
         uint256 swapAmount = 2 ether;
@@ -147,9 +141,6 @@ contract AsyncSwapHookTest is Test, Deployers {
         assertEq(hook.pendingSwapCount(), 1, "No pending swap created");
     }
 
-    // ============================================
-    // TEST 3: Execute paused swap after delay
-    // ============================================
     function test_ExecuteSwap_AfterDelay() public {
         address executor = address(0xBEEF);
         uint256 swapAmount = 2 ether;
@@ -206,9 +197,6 @@ contract AsyncSwapHookTest is Test, Deployers {
         assertEq(token1.balanceOf(address(hook)), 0, "Hook holding token1");
     }
 
-    // ============================================
-    // TEST 4: Cannot execute too early
-    // =======================================
     function test_CannotExecute_TooEarly() public {
         uint256 swapAmount = 2 ether;
 
@@ -251,9 +239,6 @@ contract AsyncSwapHookTest is Test, Deployers {
         hook.executeSwap(swapId);
     }
 
-    // ============================================
-    // TEST 6: Slippage protection works
-    // ============================================
     function test_SlippageProtection() public {
         uint256 swapAmount = 2 ether;
         uint256 impossibleMinOut = 1000 ether; // Way more than possible
@@ -275,9 +260,6 @@ contract AsyncSwapHookTest is Test, Deployers {
         hook.executeSwap(swapId);
     }
 
-    // ============================================
-    // TEST 7: Cancel swap after expiry
-    // ============================================
     function test_CancelSwap_AfterExpiry() public {
         uint256 swapAmount = 2 ether;
 
@@ -307,16 +289,12 @@ contract AsyncSwapHookTest is Test, Deployers {
 
         uint256 balance0After = token0.balanceOf(address(swapRouter));
 
-        // Should get refund
         assertEq(balance0After - balance0Before, swapAmount, "Refund incorrect");
 
         // Hook should be empty
         assertEq(token0.balanceOf(address(hook)), 0);
     }
 
-    // ============================================
-    // TEST 8: Only owner can cancel
-    // ============================================
     function test_OnlyOwner_CanCancel() public {
         uint256 swapAmount = 2 ether;
 
@@ -332,15 +310,11 @@ contract AsyncSwapHookTest is Test, Deployers {
 
         vm.warp(block.timestamp + 15 minutes);
 
-        // Try to cancel as different user (not swapRouter)
         vm.prank(address(0xDEAD));
         vm.expectRevert(bytes("Not owner"));
         hook.cancelSwap(swapId);
     }
 
-    // ============================================
-    // TEST 9: Exact output swaps revert
-    // ============================================
     function test_ExactOutput_Reverts() public {
         // Positive amount = exact output (not supported)
         SwapParams memory params = SwapParams({
@@ -354,9 +328,6 @@ contract AsyncSwapHookTest is Test, Deployers {
         swapRouter.swap(key, params, PoolSwapTest.TestSettings(false, false), ZERO_BYTES);
     }
 
-    // ============================================
-    // TEST 10: Multiple swaps in sequence
-    // ============================================
     function test_MultipleSwaps() public {
         uint256 swapAmount = 2 ether;
 
