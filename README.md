@@ -116,7 +116,7 @@ Tokens distributed: User gets 99.7%, Executor gets 0.3%
 
 ## Status: Proof of Concept
 
-### What Works ✅
+### What Works
 - Hook intercepts and pauses large swaps (>1% of liquidity)
 - Randomized execution delay (24-84 seconds)
 - Permissionless executor network with fee incentives
