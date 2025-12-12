@@ -144,12 +144,6 @@ be solved at the smart contract level alone.**
 - Additional edge case testing
 - Audit preparation
 
-**Why FHE?**
-Fully Homomorphic Encryption makes the swap details invisible until 
-atomic execution. Attackers cannot sandwich what they cannot see. 
-This is the only cryptographically sound solution to the execution-time 
-vulnerability.
-
 ## Future Work
 
 Things I'd add with more time:
@@ -164,4 +158,5 @@ Things I'd add with more time:
 
 **Built for Uniswap Hook Incubator 7**  
 Contract: `0x3874c14783b5D30f52972D0D6cAa09d04A0D4088` (Sepolia)  
-Demo: [link]
+Demo: `https://www.loom.com/share/55cdbde2ccc940239b56f0456efb643b`
+Partner Integration: No partner integrations.
