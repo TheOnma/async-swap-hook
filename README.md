@@ -132,31 +132,6 @@ to execution-time sandwiching. An attacker could front-run the
 **This is a known limitation in asynchronous execution systems and cannot 
 be solved at the smart contract level alone.**
 
-### Next Steps (Post-Hackathon)
-
-**Week 1-2: Fhenix FHE Integration**
-- Encrypt swap parameters (amount, direction, timing)
-- Implement homomorphic computation for validation
-- Atomic decrypt-and-execute to eliminate execution-time vulnerability
-
-**Week 3-4: Production Hardening**
-- Gas optimizations
-- Additional edge case testing
-- Audit preparation
-
-## Future Work
-
-Things I'd add with more time:
-
-1. **Integrate Flashbots Protect** - Route execution transactions through private mempool to prevent executor front-running
-2. **Decentralized executor network** - Multiple competing executors instead of permissionless free-for-all  
-3. **Dynamic fee adjustment** - Scale executor fee with gas prices
-4. **Better randomness** - Use Chainlink VRF or similar for more robust unpredictability
-5. **Analytics dashboard** - Track MEV saved, execution times, etc.
-
----
-
 **Built for Uniswap Hook Incubator 7**  
 Contract: `0x3874c14783b5D30f52972D0D6cAa09d04A0D4088` (Sepolia)  
 Demo: `https://www.loom.com/share/55cdbde2ccc940239b56f0456efb643b`
-Partner Integration: No partner integrations.
